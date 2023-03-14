@@ -1,0 +1,5 @@
+train: /home/jaun/soup/data/images/train
+val: /home/jaun/soup/data/images/valid
+
+nc: 5
+names: ['hand','book','paper','pad','phone']
