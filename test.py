@@ -42,7 +42,7 @@ def start():
 def gen():
     global tem_message
     while True:
-            generator = detect.run(source=0, weights='C:\\APM\\Apache24\\htdocs\\studyfriends\\best.pt')
+            generator = detect.run(source=0, weights='C:\\APM\\Apache24\\htdocs\\Soup\\best.pt')
             for results, frame in generator:
                 tem_message=results
                 ret, buffer = cv2.imencode('.jpg', frame)
