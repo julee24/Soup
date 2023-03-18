@@ -61,6 +61,11 @@ def video_feed():
     # return Response(detection['video'], mimetype='multipart/x-mixed-replace; boundary=frame')
     return Response(gen(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
+# @app.route("/video_end")
+# def video_end():
+#      cv2.destroyAllWindows()
+#      raise StopIteration
+
 # try:
 #     app.run(host='0.0.0.0', port=8889)
 # except:

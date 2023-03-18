@@ -132,11 +132,11 @@
                 <!-- <label id="hours" name="hours" form="studyTime" value="00"></label>:<label id="minutes" name="minutes" value="00" form="studyTime"></label>:<label id="seconds" name="seconds" value="00"form="studyTime">-->
 
                 <div>
-                    <img id="bg" name="live" src="">
+                    <img id="bg" name="live" src="startbutton_img.png">
                     <textarea id="resultReceived" rows="10" cols="50" style="display:none;">{{ resultReceived }}</textarea>
                 </div>
-                <input id="stop" class="button" type="button" value="중단하기" style="margin-bottom: 2rem;"onclick="{timerStop(),stopVideo()}">
-                <input id="end"class="button" type="submit" value="종료하기" form="studyTime" onclick="{timerEnd()}">
+                <input id="stop" class="button" type="button" value="중단하기" style="margin-bottom: 2rem;"onclick="{timerStop()}">
+                <input id="end"class="button" type="submit" value="종료하기" form="studyTime" onclick="{timerEnd(),stopVideo()}">
             </div>
             <!-- <div class="content">
             </div> -->
@@ -153,7 +153,7 @@
             <div class="name">©StudyFriends:스프</div>
         </footer>
     </body>
-    <!-- <script src="js/webcam.js?ver=1"></script> -->
+    <!-- <script src="js/webcam.js?ver=15></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script>
 
@@ -181,6 +181,7 @@
 
     let myVideoStream = document.getElementById('myVideo')     // make it a global variable
     let myStoredInterval = 0
+
 
     function getVideo(){
             document.getElementById("bg").src = "http://localhost/video_feed";

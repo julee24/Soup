@@ -163,7 +163,7 @@
                 <h2><?php $date = date('Y/m/d'); echo $date;?> 공부 계획</h2>
             </div>
             <div class="sub-header">
-                <span>오늘의 공부 계획을 기록해주세요!<br>다음날이 되면 사라져요!</span>
+                <span>오늘의 공부 계획을 기록해주세요!<br></span>
                 <!-- ☎️ -->
             </div>
             <!-- <div class="content">

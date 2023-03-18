@@ -219,7 +219,7 @@ $_SESSION['confirm'] = 'NO';
                                 <form action="./log.php">
                                 <input type="hidden" name="user" value="<?php echo $userid?>">
                                 <input type="hidden" name="write" value="<?php echo $dateArray;?>">
-                                    <button type="submit" class="card-link">Learn More</button>
+                                    <button type="submit" class="card-link">상세보기</button>
                                 </form>
                                 
                             </div>
