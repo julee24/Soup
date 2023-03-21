@@ -1,4 +1,5 @@
 <?php
+    ini_set('display_errors', '0');
     $is_logged = 'NO';
     session_start();
     $is_logged = $_SESSION['is_logged'];
@@ -48,7 +49,8 @@
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-        <link rel="stylesheet" href="css/studyplanner.css?ver=3"/>
+        <link rel="stylesheet" href="css/studyplanner.css?ver=4"/>
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
         <title>스프:공스타그램</title>
         <script>
             function check(box) {
@@ -163,12 +165,42 @@
                 <h2><?php $date = date('Y/m/d'); echo $date;?> 공부 계획</h2>
             </div>
             <div class="sub-header">
-                <span>오늘의 공부 계획을 기록해주세요!<br></span>
+                <span>오늘의 공부 계획을 기록해주세요!</span>
                 <!-- ☎️ -->
             </div>
             <!-- <div class="content">
                  <div id='calendar'></div>
             </div> -->
+            <div class="content">
+                <div class="planInput">
+                    <div class="studytime">
+                        <h3>⏰<?php echo $today;?> 공부 시간</h3>
+                        <?php
+                            $studytoday = date('Y-m-d');
+                            $connect = mysqli_connect("localhost","root","yewwey1105","newdb") or die ("Can't access DB");
+                            $sqlquery= "SELECT studytime FROM study where id='$id' and studydate='$studytoday'";
+                            $timecon = mysqli_query($connect, $sqlquery);
+                            $hours = 0; $minutes = 0; $seconds = 0;             
+                            while ($timerow = mysqli_fetch_array($timecon)) {
+                                $time = explode(":",$timerow[0]);
+                                $second = (int)$time[2];
+                                $seconds += $second;
+                                $minute = (int)$time[1];
+                                $minutes += $minute;
+                                $hour = (int)$time[0];
+                                $hours += $hour;
+                            }
+                            $totalSeconds = $seconds%60;
+                            $totalMinutes = ($seconds/60+$minutes)%60;
+                            $totalHours = (int)(($seconds/60+$minutes)/60+$hours);
+                        ?>
+                        <div class="time">
+                        <h2>오늘은 <?php echo $totalHours;?>시간 <?php echo $totalMinutes;?>분 <?php echo $totalSeconds;?>초를 공부했어요!😊</h2>
+                        </div>
+                    </div>
+                </div>
+                    
+                </div>
             <div class="content">
                 <div class="planInput">
                     <div class="inputform">
@@ -189,21 +221,21 @@
                                 <tr>
                                     <th class="check"></th>
                                     <th class="num"></th>
-                                    <!-- <th class="task"></th> -->
-                                    
                                     <th class="delete"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $i=1; while ($row=mysqli_fetch_array($tasks)) { ?>
                                 <tr>
+
                                     <td class="check">  
-                                        <input class="inp-cbx" id="cbx<?php echo $row['num']; ?>" type="checkbox" name="number" value="<?php echo $row['num']; ?>" <?php if($row['checklist']=='T') {?>checked <?php }?> onclick="check(this),percentcheck(this)" style="display: none;" />
-                                        <label class="cbx" for="cbx<?php echo $row['num']; ?>"><span><svg width="12px" height="9px" viewbox="0 0 12 9">
+                                        <input class="inp-cbx" id="cbx<?php echo $row['num'] ?>" type="checkbox" name="number" value="<?php echo $row['num'] ?>" <?php if($row['checklist']=='T') {?>checked <?php }?> onclick="check(this),percentcheck(this)" style="display: none;" />
+                                        <label class="cbx" for="cbx<?php echo $row['num'] ?>"><span><svg width="12px" height="9px" viewbox="0 0 12 9">
                                         <polyline points="1 5 4 8 11 1"></polyline>
                                         </svg></span><span><?php echo $row['todo'];?></span></label>
                                     </td>
                                     <td class="num" style="display:none;"><?php echo $i; ?></td>
+                                    <!-- <td class="task"></td> -->
                                     
                                     <td class="delete">
                                         <a href="planner.php?del_task=<?php echo $row['num']; ?>" style="text-decoration-line:none;">❌</a>
@@ -224,118 +256,8 @@
                         <div class="pie animate" id="chart"> 0%</div>
                     </div>
                 </div>
-                
             </div>
-                <!-- <div class="content">
-                    <div class="page-header">
-                        <h2 class="page-title">Daily Planner</h2>
-                    </div>
-                    <div class="top-container">
-                        <div class="calendar-container">
-                            <div class="header-title">
-                                <div class="header-text">
-                                  <a class="prev-button" id="prev">
-                                    <i class="material-icons">keyboard_arrow_left</i>
-                                  </a>
-                                  <h3 id="month-name">February 2023</h3>
-                                  <a class="next-button" id="next">
-                                    <i class="material-icons">keyboard_arrow_right</i>
-                                  </a>
-                                </div>
-                            </div>
-                            <div class="table-header">
-                                <div class="row">
-                                  <div class="col">월</div>
-                                  <div class="col">화</div>
-                                  <div class="col">수</div>
-                                  <div class="col">목</div>
-                                  <div class="col">금</div>
-                                  <div class="col">토</div>
-                                  <div class="col">일</div>
-                                </div>
-                              </div>
-                
-                              <div id="table-body" class="">
-                
-                              </div>
-                
-                            </div>
-                        <div class="events-container">
-                            <div class="event-header">
-                                <h2 class="event-date">
-                                    February 10th
-                                </h2>
-                            </div>
-                            <div class="events">
-                                <div class="events-header">
-                                    <h2 class="event-title">
-                                        오늘의 일정
-                                    </h2>
-                                    <button class="addbtn" data-modal-trigger="trigger-1"><i class="fa fa-fire" aria-hidden="true"></i>+</button>
-                                </div>
-                                
-                                <ul class="list">
-                                </ul>
-                            </div>                 
-                        </div>
-                    </div>
-                    <div class="planner-container">
-                        <div class="toDoList">
-                            <div class="planner-title">
-                                <a>오늘의 계획</a>
-                                <div class="addBox">
-                                    <div class="form__group field">
-                                    <form method="POST" action="planner.php">
-                                            <input type="text" name="task" id='plan' class="form__field" required>
-                                            <button type="submit" class="addToDo" name="submit">→</button>
-                                    </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <ul class="list2" id="list2">
-                            </ul>
-                          </div>
-                        <div class="progression">
-                            <div class="progression-title">
-                                <a>
-                                    계획 진행률
-                                </a>
-                            </div>
-                            <div class="pie animate" id="chart"> 0%</div>
-                        </div>
-                    </div>
-                    <div class="modal" data-modal="trigger-1">
-                        <article class="content-wrapper">
-                          <button class="close"></button>
-            
-                          <div class="select1">
-                            <h1>일정시간을 입력해주세요</h1>
-                            <div class="timestamp">
-
-                                <input type="time" id="start" name="start" required>
-                                <h1> to </h1>
-                                <input type="time" id="end" name="end" required>
-                            </div>
-                          </div>
-                          <div class="select2">
-                            <div class="insert">
-                                <h1 class="insertName">일정을 입력해주세요</h1>
-                                <input type="text" id="eventText" name="eventText" required>
-                            </div>
-            
-                          </div>
-                          <div class="done">
-                            <button class="save">
-                                <a>저장하기</a>
-                            </button>
-                          </div>
-                          
-                        </article>
-                      </div>
-                </div> -->
             </div>
-            
-
         </main>
         <footer class="footer">
             <ul class="f-list">

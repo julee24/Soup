@@ -124,14 +124,18 @@
                 <input id="start" class="button" type="button" value="시작하기" onclick="{getVideo()}">
             </div>
             <div class="content-header">
-                <div>
+                <div class="time">
                 <input id="hours" class="hours" name="hours" form="studyTime" value="00" readonly>
                 :<input id="minutes" class="minutes" name="minutes" form="studyTime" value="00" readonly >
                 :<input id="seconds" class="seconds" name="seconds" value="00" form="studyTime" readonly>
                 </div>
                 <!-- <label id="hours" name="hours" form="studyTime" value="00"></label>:<label id="minutes" name="minutes" value="00" form="studyTime"></label>:<label id="seconds" name="seconds" value="00"form="studyTime">-->
-
-                <div>
+                <div class="warning" id="warning">
+                    <span class="warning_text">
+                        핸드폰 그만! 공부에 집중해주세요!
+                    </span>
+                </div>
+                <div class ="video" style ="padding-bottom: 20px;">
                     <img id="bg" name="live" src="startbutton_img.png">
                     <textarea id="resultReceived" rows="10" cols="50" style="display:none;">{{ resultReceived }}</textarea>
                 </div>
@@ -156,7 +160,7 @@
     <!-- <script src="js/webcam.js?ver=15></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script>
-
+      var count = 0;
       $(document).ready(function()  {
         setInterval("ajaxd()", 1000); // call every 1 seconds
       });
@@ -172,14 +176,31 @@
         pads = object.includes('pad');
         paper = object.includes('paper');
         book = object.includes('book');
-        if(hands && (pads||paper||book)){
-            timerStart();
-        } else{
+        phone = object.includes('phone');
+        // let warning = document.getElementById('warning');
+
+        if(hands && (pads||paper||book) && !phone){
+                document.getElementById("warning").style.backgroundColor = "white";    
+                timerStart();
+        } 
+        
+        else{
             timerStop();
+            if (phone){
+                count += 1;
+            }
         }
+
+        if(count>=30){
+            document.getElementById("warning").style.backgroundColor = "red";
+            console.log("stop the phone!");
+            count = 0;
+        }
+
+        console.log(count);
+          
       }
 
-    let myVideoStream = document.getElementById('myVideo')     // make it a global variable
     let myStoredInterval = 0
 
 

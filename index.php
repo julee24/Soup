@@ -19,7 +19,7 @@ $_SESSION['confirm'] = 'NO';
     <head>
         <meta charset="UTF=8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="css/index.css?ver=1"/>
+        <link rel="stylesheet" href="css/index.css?ver=2"/>
         <title>스프:Study Friends</title>
     </head>
     <body>
@@ -133,7 +133,7 @@ $_SESSION['confirm'] = 'NO';
             </div>           
             <div class="responsive-wrapper">
                 <div class="content">
-                    <h2>친구들은 뭐하고 있을까요?</h2>
+                    <h2>📒친구들은 무엇을 공부할까요?</h2>
                     <ul class="cards">
                     <?php
                     // $id=$_SESSION['id'];
@@ -219,7 +219,7 @@ $_SESSION['confirm'] = 'NO';
                                 <form action="./log.php">
                                 <input type="hidden" name="user" value="<?php echo $userid?>">
                                 <input type="hidden" name="write" value="<?php echo $dateArray;?>">
-                                    <button type="submit" class="card-link">상세보기</button>
+                                    <button type="submit" class="card-link">자세히 보기</button>
                                 </form>
                                 
                             </div>
