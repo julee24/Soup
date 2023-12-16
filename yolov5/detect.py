@@ -148,7 +148,7 @@ def run(
             seen += 1
             if webcam:  # batch_size >= 1
                 p, im0, frame = path[i], im0s[i].copy(), dataset.count
-                # s += f'{i}: ' -> 이게 앞에 숫자 같음
+                # s += f'{i}: ' -> 앞에 숫자
             else:
                 p, im0, frame = path, im0s.copy(), getattr(dataset, 'frame', 0)
 
@@ -168,7 +168,7 @@ def run(
                     n = (det[:, 5] == c).sum()  # detections per class
                     s += f"{names[int(c)]},"  # add to string
 
-                #Write results  -> 이게 바운딩 박스 치는거
+                #Write results  -> 바운딩 박스 치는거
                 for *xyxy, conf, cls in reversed(det):
                     if save_txt:  # Write to file
                         xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()  # normalized xywh
@@ -184,7 +184,7 @@ def run(
                     if save_crop:
                         save_one_box(xyxy, imc, file=save_dir / 'crops' / names[c] / f'{p.stem}.jpg', BGR=True)
 
-            #Stream results -> 이게 결과 아웃풋 하는거
+            #Stream results -> 결과 아웃풋
             ##
             im0 = annotator.result()
             if view_img:
@@ -193,7 +193,7 @@ def run(
                     cv2.namedWindow(str(p), cv2.WINDOW_NORMAL | cv2.WINDOW_KEEPRATIO)  # allow window resize (Linux)
                     cv2.resizeWindow(str(p), im0.shape[1], im0.shape[0])
                 ##
-                ## cv2.imshow(str(p), im0) #이거 imo 만 기본으로 바꾸면 될거 같은데...
+                ## cv2.imshow(str(p), im0) 
                 # ret, jpeg = cv2.imencode('.jpg', im0)
                 ##
                 cv2.waitKey(1)  # 1 millisecond
