@@ -55,7 +55,7 @@ def gen():
     #cursor.close()
 
 
-# 이거 떄문인가
+#
 @app.route("/video_feed")
 def video_feed():
     # return Response(detection['video'], mimetype='multipart/x-mixed-replace; boundary=frame')
@@ -84,13 +84,13 @@ def sendResult():
     return final_message
 
 
-# 이거때문인가
+# 
 if __name__ == '__main__': 
     app.run() 
 
 
 
-# #일단
+# #
 # # def gen(camera):
 # #     while True:
 # #         # player, x_shape, y_shape, four_cc  = camera.get_frame()
@@ -127,7 +127,7 @@ if __name__ == '__main__':
 #     global hand
 #     return Response(hand, mimetype='text/html')
 
-# #일단
+# #
 # def gen(frames):
 #     consol.log(frames)
 #     yield (b'--frame\r\n' 
@@ -135,7 +135,7 @@ if __name__ == '__main__':
 
 # gen(detect.run(source=0, weights='best.pt'))
 
-# #일단
+# #
 # # @app.route('/video_feed')
 # # def video_feed():
 # #     # return Response(detect.run(source=0, weights='best.pt'), mimetype='multipart/x-mixed-replace; boundary=frame')
