@@ -148,14 +148,14 @@ def run(
             seen += 1
             if webcam:  # batch_size >= 1
                 p, im0, frame = path[i], im0s[i].copy(), dataset.count
-                # s += f'{i}: ' -> 앞에 숫자
+                # s += f'{i}: ' -> number
             else:
                 p, im0, frame = path, im0s.copy(), getattr(dataset, 'frame', 0)
 
             p = Path(p)  # to Path
             save_path = str(save_dir / p.name)  # im.jpg
             txt_path = str(save_dir / 'labels' / p.stem) + ('' if dataset.mode == 'image' else f'_{frame}')  # im.txt
-            # s += '%gx%g ' % im.shape[2:]  # print string -> 화면 크기
+            # s += '%gx%g ' % im.shape[2:]  # print string -> screen size
             gn = torch.tensor(im0.shape)[[1, 0, 1, 0]]  # normalization gain whwh
             imc = im0.copy() if save_crop else im0  # for save_crop
             annotator = Annotator(im0, line_width=line_thickness, example=str(names))
@@ -168,7 +168,7 @@ def run(
                     n = (det[:, 5] == c).sum()  # detections per class
                     s += f"{names[int(c)]},"  # add to string
 
-                #Write results  -> 바운딩 박스 치는거
+                #Write results  -> Bounding Box
                 for *xyxy, conf, cls in reversed(det):
                     if save_txt:  # Write to file
                         xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()  # normalized xywh
@@ -179,12 +179,12 @@ def run(
                     if save_img or save_crop or view_img:  # Add bbox to image
                         c = int(cls)  # integer class
                         label = None if hide_labels else (names[c] if hide_conf else f'{names[c]} {conf:.2f}')
-                        # 이거 지우면 박스 없어짐 (밑에거)
+                        # Deleting this line removes the bounding box
                         annotator.box_label(xyxy, label, color=colors(c, True))
                     if save_crop:
                         save_one_box(xyxy, imc, file=save_dir / 'crops' / names[c] / f'{p.stem}.jpg', BGR=True)
 
-            #Stream results -> 결과 아웃풋
+            #Stream results -> Output results
             ##
             im0 = annotator.result()
             if view_img:
@@ -217,7 +217,7 @@ def run(
             #             vid_writer[i] = cv2.VideoWriter(save_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
             #         vid_writer[i].write(im0)
 
-        # Print time (inference-only) -> 이게 결과 2
+        # Print time (inference-only) 
         # LOGGER.info(f"{s}{'' if len(det) else '(no detections), '}{dt[1].dt * 1E3:.1f}ms")
         # yield (f"{s}{'' if len(det) else '(no detections), '}"+"<br>") - yield results
         yield (f"{s}{'' if len(det) else '(no detections), '}", im0)
